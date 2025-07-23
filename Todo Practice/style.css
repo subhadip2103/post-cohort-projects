@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+body{
+    background-color: yellow;
+}
+h1{
+    text-align: center;
+    height: 20vh;
+}
+.todoinput{
+    position: absolute;
+    bottom: 100px;
+    width: 100vw;
+    text-align: center;
+}
+.task-input{
+    width: 200px;
+    height: 40px;
+}
+.add-btn{
+    border-radius: 60px;
+    border: none;
+    height: 40px;
+    width: 100px;
+    background-color: orange;
+}
+.todo-display{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+#todo-{
+    height: 200px;
+    width: 200px;
+    background-color: aqua;
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Freelance Gig",
+    "amount": "50000",
+    "type": "income",
+    "category": "Other",
+    "userid": "9f07aa64-ce4e-4f6f-a21a-0d6f463b4b81",
+    "username": "Harkirat",
+    "date": "7/18/2025",
+    "id": "PrRQklbq72"
+  },
+  {
+    "title": "Dividend",
+    "amount": "50000",
+    "type": "income",
+    "category": "Investments",
+    "userid": "9f07aa64-ce4e-4f6f-a21a-0d6f463b4b81",
+    "username": "Harkirat",
+    "date": "7/19/2025",
+    "id": "V5KUC9c3rM"
+  },
+  {
+    "title": "Dividend",
+    "amount": "100000",
+    "type": "income",
+    "category": "Investments",
+    "userid": "9721ddf2-da0b-40f8-9736-ffb6867c1879",
+    "username": "Sadhana",
+    "date": "7/19/2025",
+    "id": "2zMTKNGOg6"
+  },
+  {
+    "title": "Personal Trainer",
+    "amount": "10000",
+    "type": "expense",
+    "category": "Internet",
+    "userid": "9721ddf2-da0b-40f8-9736-ffb6867c1879",
+    "username": "Sadhana",
+    "date": "7/19/2025",
+    "id": "MYaoyzcE6s"
+  }
+]
