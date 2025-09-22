@@ -38,5 +38,15 @@
     "username": "Sadhana",
     "date": "7/19/2025",
     "id": "MYaoyzcE6s"
+  },
+  {
+    "title": "Gym Membership",
+    "amount": "15000",
+    "type": "expense",
+    "category": "Internet",
+    "userid": "9f07aa64-ce4e-4f6f-a21a-0d6f463b4b81",
+    "username": "Harkirat",
+    "date": "7/31/2025",
+    "id": "Fl25bmBhYw"
   }
 ]
