@@ -1,20 +1,31 @@
-const express = require("express");
+const express = require('express');
+require("dotenv").config()
 const mongoose = require("mongoose");
-require("dotenv").config();
 const app = express();
-const { userRouter } = require("./routes/users")
-const { courseRouter } = require("./routes/courses")
-const { adminRouter } = require("./routes/admin")
+const jwt = require('jsonwebtoken')
+const { UserRouter } = require("./Routes/users");
+const { CourseRouter } = require("./Routes/courses");
+const { adminRouter } = require("./Routes/admin");
+const cookieParser = require('cookie-parser');
 
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/admin", adminRouter);
-app.use("/api/v1/courses", courseRouter);
+app.use(cookieParser());
+app.use(express.json())
 
-async function main() {
-    await mongoose.connect(`${process.env.MONGODB_URL}coursetera-db`);
-    app.listen(3000, () => {
-        console.log("running on port 3000")
-    })
+app.use("/api/v1/users", UserRouter)
+app.use("/api/v1/courses", CourseRouter)
+app.use("/api/v1/admins", adminRouter)
+
+try {
+    async function main() {
+        await mongoose.connect(`${process.env.MONGODB_URL}${process.env.DB_NAME}`);
+        app.listen(3000, () => {
+            console.log("Running on port 3000")
+        });
+    }
+
+    main();
 }
-
-main()
+catch(err){
+    console.log("Unable to connect server or database");
+    console.log(err)
+}
