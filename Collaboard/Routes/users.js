@@ -5,7 +5,7 @@ const UserRouter = express.Router();
 const { z, email, string } = require("zod");
 const { UserModel, BoardModel } = require("../db");
 const jwt = require("jsonwebtoken");
-const { userMiddleware } = require("../Middlewares/usermiddleware");
+const { userMiddleware } = require("../Middlewares/userMiddleware");
 
 
 

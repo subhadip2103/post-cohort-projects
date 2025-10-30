@@ -3,7 +3,7 @@ const cardRouter = express.Router();
 const { z } = require("zod");
 const { BoardModel, CardModel } = require("../db");
 const { v4: uuidv4 } = require("uuid");
-const { userMiddleware } = require("../Middlewares/usermiddleware");
+const { userMiddleware } = require("../Middlewares/userMiddleware");
 
 
 
