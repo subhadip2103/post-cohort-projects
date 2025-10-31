@@ -3,9 +3,9 @@ require("dotenv").config()
 const mongoose = require("mongoose");
 const app = express();
 const jwt = require('jsonwebtoken')
-const { UserRouter } = require("./Routes/users");
-const { CourseRouter } = require("./Routes/courses");
-const { adminRouter } = require("./Routes/admin");
+const { UserRouter } = require("./routes/users");
+const { CourseRouter } = require("./routes/courses");
+const { adminRouter } = require("./routes/admin");
 const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 3000;
 
