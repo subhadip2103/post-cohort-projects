@@ -7,6 +7,7 @@ const { UserRouter } = require("./Routes/users");
 const { CourseRouter } = require("./Routes/courses");
 const { adminRouter } = require("./Routes/admin");
 const cookieParser = require('cookie-parser');
+const PORT = process.env.PORT || 3000;
 
 app.use(cookieParser());
 app.use(express.json())
@@ -19,7 +20,7 @@ try {
     async function main() {
         await mongoose.connect(`${process.env.MONGODB_URL}${process.env.DB_NAME}`);
         app.listen(3000, () => {
-            console.log("Running on port 3000")
+            console.log(`Running on port ${PORT}`)
         });
     }
 
