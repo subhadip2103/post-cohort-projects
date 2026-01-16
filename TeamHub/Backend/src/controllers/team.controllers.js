@@ -65,7 +65,15 @@ export const getMyTeams = async (req, res) => {
 
 export const joinTeam = async (req, res) => {
   const MyUserId = req.userId;
-  const { teamCode } = req.body;
+  const requiredBody=z.object({
+    teamCode:z.uuid()
+  })
+  const parsed=requiredBody.safeParse(req.body);
+  if(!parsed.success){
+    return res.status(400).json({Message: "Invalid Data sent"})
+  }
+
+  const { teamCode } = parsed.data;
 
 
   const team = await Team.findOne({
