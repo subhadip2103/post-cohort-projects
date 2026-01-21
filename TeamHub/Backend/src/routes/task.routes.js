@@ -9,7 +9,9 @@ import {
 
 const taskRoutes=express.Router();
 
-taskRoutes.post("/:projectCode/tasks",authMiddleware,createTasks)
-taskRoutes.get("/:projectCode/tasks",authMiddleware,listTasks)
+taskRoutes.post("/project/:projectCode",authMiddleware,createTasks)
+taskRoutes.get("/project/:projectCode",authMiddleware,listTasks)
 taskRoutes.patch("/:taskCode",authMiddleware,editTasks)
 taskRoutes.delete("/:taskCode",authMiddleware,deleteTasks)
+
+export default taskRoutes

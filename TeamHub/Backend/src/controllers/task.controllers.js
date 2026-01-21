@@ -1,7 +1,7 @@
 import { z } from "zod";
-import Task from "../models/Task";
+import Task from "../models/Task.js";
 import { Types } from "mongoose";
-import Project from "../models/Project";
+import Project from "../models/Project.js";
 
 export const createTasks = async (req, res) => {
     try {
@@ -9,10 +9,9 @@ export const createTasks = async (req, res) => {
         const projectId = req.params.projectCode;
 
         const requiredBody = z.object({
-            projectId: z.uuid(),
             title: z.string().min(2).max(50),
             description: z.string().optional(),
-            status: z.enum(["todo", "doing", "done"]),
+            status: z.enum(["todo", "doing", "done"]).optional(),
             assignedTo: z.string().refine((val) => Types.ObjectId.isValid(val), {
                 message: "Invalid assignedTo ID",
             }).optional(),
@@ -51,7 +50,10 @@ export const createTasks = async (req, res) => {
             createdBy: userId
         });
 
-        res.status(201).json(newTask);
+        res.status(201).json({
+            message: "Task created successfully",
+            taskCode: newTask.taskCode
+        });
 
     } catch (error) {
         console.error(error);
@@ -65,7 +67,7 @@ export const listTasks = async (req, res) => {
         const userId = req.userId;
         const projectId = req.params.projectCode;
 
-        const project = await Project.findOne({ projectId:project._id }).populate("teamId");
+        const project = await Project.findOne({ projectCode: projectId }).populate("teamId");
 
         if (!project) {
             return res.status(404).json({ message: "Project not found" });
@@ -82,7 +84,7 @@ export const listTasks = async (req, res) => {
             return res.status(403).json({ message: "Access denied" });
         }
 
-        const tasks = await Task.find({ projectId });
+        const tasks = await Task.find({ projectId: project._id });
         if (!tasks) {
             return res.status(404).json({ message: "Tasks not found." })
         }
@@ -102,9 +104,9 @@ export const editTasks = async (req, res) => {
 
         // 1. Validate Input
         const requiredBody = z.object({
-            title: z.string().min(2).max(50),
+            title: z.string().min(2).max(50).optional(),
             description: z.string().optional(), // Added ()
-            status: z.enum(["todo", "doing", "done"])
+            status: z.enum(["todo", "doing", "done"]).optional()
         });
 
         const parsed = requiredBody.safeParse(req.body);
@@ -135,9 +137,9 @@ export const editTasks = async (req, res) => {
         }
 
         // 4. Update the Task
-        task.title = parsed.data.title;
+        task.title = parsed.data.title || task.title;
         task.description = parsed.data.description || task.description;
-        task.status = parsed.data.status;
+        task.status = parsed.data.status || task.status;
 
         await task.save();
 
@@ -164,7 +166,7 @@ export const deleteTasks = async (req, res) => {
 
         if (!task) return res.status(404).json({ message: "Task not found" });
 
-        const isMember = task.projectId?.teamId?.members.some(id => id.toString() === userId);
+        const isMember = task.projectId?.teamId?.members.some(id => id.toString() === userId.toString());
         if (!isMember) return res.status(403).json({ message: "Denied" });
 
         await Task.deleteOne({ _id: task._id });
