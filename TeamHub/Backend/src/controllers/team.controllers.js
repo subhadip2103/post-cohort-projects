@@ -27,7 +27,8 @@ export const createTeam = async (req, res) => {
 
     res.status(201).json({
       message: "Team created successfully",
-      inviteLink: `http://localhost:3001/join/${newTeam.teamCode}`
+      inviteLink: `http://localhost:3001/join/${newTeam.teamCode}`,
+      teamCode: newTeam.teamCode
     })
   } catch (error) {
     return res.status(500).json({
@@ -65,12 +66,12 @@ export const getMyTeams = async (req, res) => {
 
 export const joinTeam = async (req, res) => {
   const MyUserId = req.userId;
-  const requiredBody=z.object({
-    teamCode:z.uuid()
+  const requiredBody = z.object({
+    teamCode: z.uuid()
   })
-  const parsed=requiredBody.safeParse(req.body);
-  if(!parsed.success){
-    return res.status(400).json({Message: "Invalid Data sent"})
+  const parsed = requiredBody.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ Message: "Invalid Data sent" })
   }
 
   const { teamCode } = parsed.data;

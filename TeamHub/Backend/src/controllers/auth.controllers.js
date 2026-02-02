@@ -70,7 +70,7 @@ export const signinUsers = async (req, res) => {
         res.cookie('userAccessToken', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: 'strict',
+            sameSite: 'lax',
             maxAge: 120 * 60 * 1000
         })
         res.status(200).json({ message: 'Logged in successfully' });
@@ -82,6 +82,22 @@ export const signinUsers = async (req, res) => {
 
 
 }
+
+export const logoutUsers = async (req, res) => {
+    try {
+        res.clearCookie('userAccessToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: 'lax',
+            path: '/'
+        });
+
+        return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        console.error("Logout Error:", error);
+        return res.status(500).json({ message: "Error during logout" });
+    }
+};
 
 export const verifyMe = async (req, res) => {
     const userId = req.userId;
@@ -100,3 +116,4 @@ export const verifyMe = async (req, res) => {
     })
 
 }
+
