@@ -72,7 +72,7 @@ export const listNote = async (req, res) => {
         return res.status(403).json({ message: "Access denied: You are not a member of this project's team" });
     }
 
-    const notes = await Note.find({ taskId: task._id });
+    const notes = await Note.find({ taskId: task._id }).populate("createdBy", "firstname lastname");
 
     res.status(200).json({
         Message: "Task found successfully.",

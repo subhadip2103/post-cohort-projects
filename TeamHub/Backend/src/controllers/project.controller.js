@@ -90,3 +90,41 @@ export const getProjectByCode = async (req, res) => {
         }
     });
 }
+
+export const getProjectContext = async (req, res) => {
+  try {
+    const { projectCode } = req.params;
+
+    const project = await Project.findOne({ projectCode });
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const team = await Team.findById(project.teamId)
+      .populate("members", "firstname lastname");
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    const members = team.members.map((m) => ({
+      userId: m._id,
+      name: `${m.firstname} ${m.lastname}`,
+    }));
+
+    res.status(200).json({
+      project: {
+        projectCode: project.projectCode,
+        title: project.title,
+      },
+      team: {
+        teamCode: team.teamCode,
+        name: team.name,
+      },
+      members,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
